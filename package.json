@@ -1,0 +1,17 @@
+{
+  "name": "mime-header-word-decoder",
+  "version": "0.1.0",
+  "description": "Parses RFC 2047 encoded-word headers including UTF-8 Base64 and Quoted-Printable variants.",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": "./src/index.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "keywords": [],
+  "license": "MIT",
+  "dependencies": {}
+}
