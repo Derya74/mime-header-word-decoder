@@ -1,0 +1,25 @@
+# MIME Header Word Decoder
+
+Parses RFC 2047 `encoded-word` headers (`=?charset?encoding?text?=`) and returns a decoded `string`, with surrounding whitespace folded so adjacent encoded words concatenate cleanly.
+
+## Usage
+
+```js
+import { decodeHeader } from "./src/core.js";
+
+decodeHeader("=?UTF-8?B?SGVsbG8sIHdvcmxkIQ==?=");
+// → "Hello, world!"
+
+decodeHeader("=?UTF-8?Q?Ol=C3=A9?= monde");
+// → "Olé monde"
+```
+
+## Why
+
+Email subjects and display names routinely contain non-ASCII text wrapped in RFC 2047 encoded-words. Writing the decoder by hand each time is error-prone. This library exists to do exactly that job — and no more.
+
+**Scope chosen.** Only `B` (Base64) and `Q` (Quoted-Printable) encodings are supported, and only `UTF-8` and `US-ASCII` are accepted as charsets (other charsets throw). This is a deliberate, stated limitation: a correct decoder for arbitrary historical charsets would require a full text-encoding table, which violates the zero-dependency brief. Anything outside these two charsets will throw rather than produce a possibly-wrong result.
+
+## Awkward edge
+
+RFC 2047 mandates that whitespace between two adjacent encoded-words is removed during folding — `=?B?...?= =?B?...?=` becomes the concatenation with no space between. This decoder honors that rule: whitespace that is purely structural folding between adjacent encoded words is dropped, while literal whitespace inside surrounding plain text is preserved.
