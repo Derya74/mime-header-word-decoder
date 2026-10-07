@@ -23,3 +23,10 @@ Email subjects and display names routinely contain non-ASCII text wrapped in RFC
 ## Awkward edge
 
 RFC 2047 mandates that whitespace between two adjacent encoded-words is removed during folding — `=?B?...?= =?B?...?=` becomes the concatenation with no space between. This decoder honors that rule: whitespace that is purely structural folding between adjacent encoded words is dropped, while literal whitespace inside surrounding plain text is preserved.
+
+## Performance
+
+The window keeps a bounded buffer, so `push` is constant time and memory does not
+grow with the length of the stream. `peak` and `trough` are linear in the window
+size, which is the trade that keeps `push` cheap.
+
