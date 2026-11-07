@@ -1,6 +1,6 @@
 {
   "name": "mime-header-word-decoder",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Parses RFC 2047 encoded-word headers including UTF-8 Base64 and Quoted-Printable variants.",
   "type": "module",
   "main": "src/index.js",
